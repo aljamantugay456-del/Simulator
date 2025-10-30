@@ -1,0 +1,133 @@
+local a,b,c,d,e,f=game:GetService("Players"),game:GetService("TweenService"),game:GetService("UserInputService"),game:GetService("ReplicatedStorage"),game:GetService("Workspace"),game:GetService("RunService")
+local g=a.LocalPlayer
+local h=Instance.new("ScreenGui",g:WaitForChild("PlayerGui"))
+h.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+h.Name="HOKALAZA_MAIN"
+local i=Instance.new("Frame",h)
+i.Size=UDim2.new(0.45,0,0.9,0)
+i.Position=UDim2.new(0.27,0,0.05,0)
+i.BackgroundColor3=Color3.fromRGB(0,0,0)
+i.BorderSizePixel=0
+i.Active=true
+i.Draggable=true
+local j=Instance.new("UIStroke",i)
+j.Thickness=3
+j.Color=Color3.fromRGB(255,255,255)
+j.Transparency=0.3
+Instance.new("UICorner",i)
+task.spawn(function()while task.wait(0.05)do local t=math.abs(math.sin(os.clock()*2))j.Transparency=0.15+t*0.35 end end)
+local k=Instance.new("TextLabel",i)
+k.Size=UDim2.new(1,0,0.1,0)
+k.BackgroundTransparency=1
+k.Text="HOKALAZA PANEL"
+k.TextScaled=true
+k.Font=Enum.Font.GothamBold
+k.TextColor3=Color3.fromRGB(255,255,255)
+local function l(m,n)local o=Instance.new("TextButton",i)o.BackgroundColor3=Color3.fromRGB(20,20,20)o.BorderSizePixel=0 o.Size=UDim2.new(0.7,0,0.08,0)o.Position=UDim2.new(0.15,0,n,0)o.Text=m o.TextScaled=true o.Font=Enum.Font.GothamBold o.TextColor3=Color3.fromRGB(255,255,255)Instance.new("UICorner",o)local p=Instance.new("UIStroke",o)p.Color=Color3.fromRGB(255,255,255)p.Transparency=0.4 return o end
+local B1=l("Auto Coin Panel",0.2)
+local B2=l("Spy Panel",0.33)
+local B3=l("Run Panel",0.46)
+local VLabel=Instance.new("TextLabel",i)
+VLabel.Size=UDim2.new(1,0,0.25,0)
+VLabel.Position=UDim2.new(0,0,0.7,0)
+VLabel.BackgroundColor3=Color3.fromRGB(10,10,10)
+VLabel.TextColor3=Color3.fromRGB(255,255,255)
+VLabel.TextScaled=true
+VLabel.Font=Enum.Font.Gotham
+VLabel.Text="Select a panel..."
+Instance.new("UICorner",VLabel)
+local vStroke=Instance.new("UIStroke",VLabel)
+vStroke.Color=Color3.fromRGB(255,255,255)
+vStroke.Transparency=0.4
+local function notify(q)local r=Instance.new("Frame",h)r.Size=UDim2.new(0,250,0,50)r.Position=UDim2.new(1,10,0.5,0)r.BackgroundColor3=Color3.fromRGB(0,0,0)Instance.new("UICorner",r)local s=Instance.new("UIStroke",r)s.Color=Color3.fromRGB(255,255,255)s.Transparency=0.3 local t=Instance.new("TextLabel",r)t.Size=UDim2.new(1,0,1,0)t.BackgroundTransparency=1;t.Text=q;t.TextColor3=Color3.fromRGB(255,255,255);t.TextScaled=true;t.Font=Enum.Font.Gotham TweenService:Create(r,TweenInfo.new(0.5,Enum.EasingStyle.Sine),{Position=UDim2.new(1,-260,r.Position.Y.Scale,r.Position.Y.Offset)}):Play() task.delay(3,function()TweenService:Create(r,TweenInfo.new(0.5,Enum.EasingStyle.Sine),{Position=UDim2.new(1,10,r.Position.Y.Scale,r.Position.Y.Offset)}):Play() task.wait(0.5) r:Destroy() end) end
+
+B1.MouseButton1Click:Connect(function()
+	VLabel.Text="Auto Coin Panel Active"
+	notify("Auto Coin Panel Opened")
+	local gui=Instance.new("ScreenGui",g.PlayerGui) gui.Name="Auto_Coin_Panel"; gui.ResetOnSpawn=false
+	local f1=Instance.new("Frame",gui) f1.Size=UDim2.new(0,280,0,150); f1.Position=UDim2.new(0.5,-140,0.5,-75); f1.BackgroundColor3=Color3.fromRGB(0,0,0); f1.BorderSizePixel=0; f1.Active=true; f1.Draggable=true; Instance.new("UICorner",f1)
+	local st=Instance.new("UIStroke",f1) st.Thickness=3; st.Color=Color3.fromRGB(255,255,255); st.Transparency=0.3
+	task.spawn(function()while task.wait(0.05)do local t=math.abs(math.sin(os.clock()*2)); st.Transparency=0.1+t*0.4 end end)
+	local lbl=Instance.new("TextLabel",f1) lbl.Size=UDim2.new(1,0,0,40); lbl.BackgroundTransparency=1; lbl.Text="HOKALAZA AUTO COIN PANEL"; lbl.TextColor3=Color3.fromRGB(255,255,255); lbl.TextSize=20; lbl.Font=Enum.Font.GothamBold
+	local btn=Instance.new("TextButton",f1) btn.Size=UDim2.new(0.6,0,0,45); btn.Position=UDim2.new(0.2,0,0.6,0); btn.BackgroundColor3=Color3.fromRGB(30,30,30); btn.Text="Auto Coin: OFF"; btn.TextColor3=Color3.fromRGB(255,255,255); btn.Font=Enum.Font.GothamBold; btn.TextSize=16; Instance.new("UICorner",btn); local s=Instance.new("UIStroke",btn); s.Color=Color3.fromRGB(255,255,255); s.Transparency=0.4
+	local RC=ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("RecieveCoin"); local e=false
+	btn.MouseButton1Click:Connect(function()
+		e=not e
+		btn.Text=e and "Auto Coin: ON" or "Auto Coin: OFF"
+		TweenService:Create(btn,TweenInfo.new(0.3),{BackgroundColor3=e and Color3.fromRGB(80,200,120) or Color3.fromRGB(30,30,30)}):Play()
+		if e then
+			task.spawn(function()
+				while e do
+					pcall(function()
+						local jp=Workspace:FindFirstChild("Jeepnies")
+						if jp then
+							for _,j in pairs(jp:GetChildren())do
+								local pv=j:FindFirstChild("PassengerValues")
+								if pv then
+									RC:FireServer({Value=300,PassengerValues=pv,Password=123456789})
+								end
+							end
+						end
+					end)
+					task.wait(0.01)
+				end
+			end)
+		end
+	end)
+end)
+
+B2.MouseButton1Click:Connect(function()
+	VLabel.Text="Spy Panel Active"
+	notify("Spy Panel Opened")
+	task.spawn(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-OctoSpy-22363"))() end)
+end)
+
+B3.MouseButton1Click:Connect(function()
+	VLabel.Text="Run Panel Active"
+	notify("Run Panel Opened")
+	local gui=Instance.new("ScreenGui",g.PlayerGui); gui.Name="HOKALAZA_RUN_PANEL"
+	local f2=Instance.new("Frame",gui); f2.Size=UDim2.new(0,360,0,230); f2.Position=UDim2.new(0.5,-180,0.5,-115); f2.BackgroundColor3=Color3.fromRGB(0,0,0); f2.BorderSizePixel=0; f2.Active=true; f2.Draggable=true; Instance.new("UICorner",f2)
+	local st2=Instance.new("UIStroke",f2); st2.Thickness=3; st2.Color=Color3.fromRGB(255,255,255); st2.Transparency=0.3
+	task.spawn(function()while task.wait(0.05)do local t=math.abs(math.sin(os.clock()*2)); st2.Transparency=0.15+t*0.35 end end)
+	local lbl2=Instance.new("TextLabel",f2); lbl2.Size=UDim2.new(1,-60,0,40); lbl2.Position=UDim2.new(0,15,0,0); lbl2.BackgroundTransparency=1; lbl2.Text="HOKALAZA RUN PANEL"; lbl2.Font=Enum.Font.GothamBold; lbl2.TextSize=22; lbl2.TextColor3=Color3.fromRGB(255,255,255); lbl2.TextXAlignment=Enum.TextXAlignment.Left
+	local minBtn=Instance.new("TextButton",f2); minBtn.Size=UDim2.new(0,30,0,30); minBtn.Position=UDim2.new(1,-40,0,5); minBtn.BackgroundColor3=Color3.fromRGB(255,255,255); minBtn.Text="_"; minBtn.Font=Enum.Font.GothamBold; minBtn.TextSize=20; minBtn.TextColor3=Color3.fromRGB(0,0,0); Instance.new("UICorner",minBtn)
+	local txtBox=Instance.new("TextBox",f2); txtBox.Size=UDim2.new(0,320,0,100); txtBox.Position=UDim2.new(0,20,0,60); txtBox.BackgroundColor3=Color3.fromRGB(10,10,10); txtBox.TextColor3=Color3.fromRGB(255,255,255); txtBox.Font=Enum.Font.Code; txtBox.TextSize=16; txtBox.PlaceholderText="Paste any Lua script here"; txtBox.ClearTextOnFocus=false; txtBox.TextWrapped=true; txtBox.TextYAlignment=Enum.TextYAlignment.Top; Instance.new("UICorner",txtBox)
+	local runBtn=Instance.new("TextButton",f2); runBtn.Size=UDim2.new(0,320,0,45); runBtn.Position=UDim2.new(0,20,0,175); runBtn.BackgroundColor3=Color3.fromRGB(255,255,255); runBtn.Text="Start Loop"; runBtn.TextColor3=Color3.fromRGB(0,0,0); runBtn.Font=Enum.Font.GothamBold; runBtn.TextSize=18; Instance.new("UICorner",runBtn)
+	local looping=false; local conn
+	runBtn.MouseButton1Click:Connect(function()
+		if looping then
+			looping=false; runBtn.Text="Start Loop"; runBtn.BackgroundColor3=Color3.fromRGB(255,255,255); runBtn.TextColor3=Color3.fromRGB(0,0,0)
+			if conn then conn:Disconnect() conn=nil end
+		else
+			looping=true; runBtn.Text="Stop Loop"; runBtn.BackgroundColor3=Color3.fromRGB(255,80,80); runBtn.TextColor3=Color3.fromRGB(255,255,255)
+			conn=RunService.Heartbeat:Connect(function()
+				local code=txtBox.Text
+				if code and code~="" then pcall(function() loadstring(code)() end) end
+				task.wait(0.01)
+			end)
+		end
+	end)
+	local min=false
+	minBtn.MouseButton1Click:Connect(function()
+		min=not min
+		if min then txtBox.Visible=false; runBtn.Visible=false; TweenService:Create(f2,TweenInfo.new(0.3),{Size=UDim2.new(0,360,0,45)}):Play() else txtBox.Visible=true; runBtn.Visible=true; TweenService:Create(f2,TweenInfo.new(0.3),{Size=UDim2.new(0,360,0,230)}):Play() end
+	end)
+end)
+
+local TBtn=Instance.new("TextButton",h)
+TBtn.Size=UDim2.new(0,40,0,40)
+TBtn.Position=UDim2.new(0,10,0.45,0)
+TBtn.BackgroundColor3=Color3.fromRGB(0,0,0)
+TBtn.Text="≡"
+TBtn.TextScaled=true
+TBtn.TextColor3=Color3.fromRGB(255,255,255)
+Instance.new("UICorner",TBtn)
+local tS=Instance.new("UIStroke",TBtn)
+tS.Color=Color3.fromRGB(255,255,255)
+tS.Transparency=0.3
+local vis=true
+TBtn.MouseButton1Click:Connect(function()
+	vis=not vis
+	local tgt=vis and UDim2.new(0.27,0,0.05,0) or UDim2.new(-0.6,0,0.05,0)
+	TweenService:Create(i,TweenInfo.new(0.4,Enum.EasingStyle.Sine),{Position=tgt}):Play()
+end)
