@@ -1,0 +1,382 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local correctKey = "PAID"
+
+-- Key GUI
+local keyGui = Instance.new("ScreenGui", player.PlayerGui)
+keyGui.Name = "HOKALAZA_KEY_GUI"
+
+local frame = Instance.new("Frame", keyGui)
+frame.Size = UDim2.new(0, 300, 0, 150)
+frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+frame.BorderSizePixel = 0
+frame.Active = true
+frame.Draggable = true
+Instance.new("UICorner", frame)
+local stroke = Instance.new("UIStroke", frame)
+stroke.Color = Color3.fromRGB(255,255,255)
+stroke.Thickness = 3
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1,0,0,40)
+title.BackgroundTransparency = 1
+title.Text = "Enter Key"
+title.TextScaled = true
+title.Font = Enum.Font.GothamBold
+title.TextColor3 = Color3.fromRGB(255,255,255)
+
+local textbox = Instance.new("TextBox", frame)
+textbox.Size = UDim2.new(0.8,0,0,40)
+textbox.Position = UDim2.new(0.1,0,0.4,0)
+textbox.BackgroundColor3 = Color3.fromRGB(30,30,30)
+textbox.TextColor3 = Color3.fromRGB(255,255,255)
+textbox.TextScaled = true
+textbox.Font = Enum.Font.GothamBold
+textbox.ClearTextOnFocus = false
+Instance.new("UICorner", textbox)
+
+local submit = Instance.new("TextButton", frame)
+submit.Size = UDim2.new(0.5,0,0,35)
+submit.Position = UDim2.new(0.25,0,0.75,0)
+submit.BackgroundColor3 = Color3.fromRGB(50,50,50)
+submit.TextColor3 = Color3.fromRGB(255,255,255)
+submit.Text = "Submit"
+submit.Font = Enum.Font.GothamBold
+submit.TextScaled = true
+Instance.new("UICorner", submit)
+
+-- Main GUI
+local function CreateMainGui()
+	keyGui:Destroy()
+	local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	screenGui.Name = "HOKALAZA_MAIN"
+
+	local frame = Instance.new("Frame", screenGui)
+	frame.Size = UDim2.new(0.45,0,0.9,0)
+	frame.Position = UDim2.new(0.27,0,0.05,0)
+	frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	frame.BorderSizePixel = 0
+	frame.Active = true
+	frame.Draggable = true
+	Instance.new("UICorner", frame)
+	local stroke = Instance.new("UIStroke", frame)
+	stroke.Color = Color3.fromRGB(255,255,255)
+	stroke.Thickness = 3
+	task.spawn(function()
+		while task.wait(0.05) do
+			stroke.Transparency = 0.15 + math.abs(math.sin(os.clock()*2))*0.35
+		end
+	end)
+
+	local title = Instance.new("TextLabel", frame)
+	title.Size = UDim2.new(1,0,0.1,0)
+	title.BackgroundTransparency = 1
+	title.Text = "HOKALAZA PANEL"
+	title.TextScaled = true
+	title.Font = Enum.Font.GothamBold
+	title.TextColor3 = Color3.fromRGB(255,255,255)
+
+	local function makeButton(text,y)
+		local b = Instance.new("TextButton", frame)
+		b.BackgroundColor3 = Color3.fromRGB(20,20,20)
+		b.BorderSizePixel = 0
+		b.Size = UDim2.new(0.7,0,0.08,0)
+		b.Position = UDim2.new(0.15,0,y,0)
+		b.Text = text
+		b.TextScaled = true
+		b.Font = Enum.Font.GothamBold
+		b.TextColor3 = Color3.fromRGB(255,255,255)
+		Instance.new("UICorner", b)
+		local s = Instance.new("UIStroke", b)
+		s.Color = Color3.fromRGB(255,255,255)
+		s.Transparency = 0.4
+		return b
+	end
+
+	local Button1 = makeButton("Auto Coin Panel",0.2)
+	local Button2 = makeButton("Spy Panel",0.33)
+	local Button3 = makeButton("Run Panel",0.46)
+	local Button4 = makeButton("Visual Panel",0.59)
+
+	local VisualFrame = Instance.new("Frame", frame)
+	VisualFrame.BackgroundColor3 = Color3.fromRGB(10,10,10)
+	VisualFrame.Size = UDim2.new(0.9,0,0.25,0)
+	VisualFrame.Position = UDim2.new(0.05,0,0.72,0)
+	Instance.new("UICorner", VisualFrame)
+	local vStroke = Instance.new("UIStroke", VisualFrame)
+	vStroke.Color = Color3.fromRGB(255,255,255)
+	vStroke.Transparency = 0.4
+
+	local VisualLabel = Instance.new("TextLabel", VisualFrame)
+	VisualLabel.Size = UDim2.new(1,0,1,0)
+	VisualLabel.BackgroundTransparency = 1
+	VisualLabel.TextScaled = true
+	VisualLabel.Font = Enum.Font.Gotham
+	VisualLabel.TextColor3 = Color3.fromRGB(255,255,255)
+	VisualLabel.Text = "Select a panel..."
+
+	-- Auto Coin Panel
+	Button1.MouseButton1Click:Connect(function()
+		VisualLabel.Text = "Auto Coin Panel Active"
+		local gui = Instance.new("ScreenGui", player.PlayerGui)
+		gui.Name = "Auto_Coin_Panel"
+		local main = Instance.new("Frame", gui)
+		main.Size = UDim2.new(0,280,0,150)
+		main.Position = UDim2.new(0.5,-140,0.5,-75)
+		main.BackgroundColor3 = Color3.fromRGB(0,0,0)
+		main.BorderSizePixel = 0
+		main.Active = true
+		main.Draggable = true
+		Instance.new("UICorner", main)
+		local glow = Instance.new("UIStroke", main)
+		glow.Thickness = 3
+		glow.Color = Color3.fromRGB(255,255,255)
+		task.spawn(function()
+			while task.wait(0.05) do
+				glow.Transparency = 0.1+math.abs(math.sin(os.clock()*2))*0.4
+			end
+		end)
+		local title = Instance.new("TextLabel", main)
+		title.Size = UDim2.new(1,0,0,40)
+		title.BackgroundTransparency = 1
+		title.Text = "HOKALAZA AUTO COIN PANEL"
+		title.TextColor3 = Color3.fromRGB(255,255,255)
+		title.TextSize = 20
+		title.Font = Enum.Font.GothamBold
+
+		local button = Instance.new("TextButton", main)
+		button.Size = UDim2.new(0.6,0,0,45)
+		button.Position = UDim2.new(0.2,0,0.6,0)
+		button.BackgroundColor3 = Color3.fromRGB(30,30,30)
+		button.Text = "Auto Coin: OFF"
+		button.TextColor3 = Color3.fromRGB(255,255,255)
+		button.TextSize = 16
+		button.Font = Enum.Font.GothamBold
+		Instance.new("UICorner", button)
+		local bStroke = Instance.new("UIStroke", button)
+		bStroke.Color = Color3.fromRGB(255,255,255)
+		bStroke.Transparency = 0.4
+
+		local RecieveCoin = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("RecieveCoin")
+		local enabled = false
+
+		button.MouseButton1Click:Connect(function()
+			enabled = not enabled
+			button.Text = enabled and "Auto Coin: ON" or "Auto Coin: OFF"
+			TweenService:Create(button,TweenInfo.new(0.3),{BackgroundColor3 = enabled and Color3.fromRGB(80,200,120) or Color3.fromRGB(30,30,30)}):Play()
+			if enabled then
+				task.spawn(function()
+					while enabled do
+						pcall(function()
+							local jeepnies = Workspace:FindFirstChild("Jeepnies")
+							if jeepnies then
+								for _, jeep in pairs(jeepnies:GetChildren()) do
+									local PassengerValues = jeep:FindFirstChild("PassengerValues")
+									if PassengerValues then
+										RecieveCoin:FireServer({Value=300,PassengerValues=PassengerValues,Password=123456789})
+									end
+								end
+							end
+						end)
+						task.wait(0.01)
+					end
+				end)
+			end
+		end)
+	end)
+
+	-- Spy Panel
+	Button2.MouseButton1Click:Connect(function()
+		VisualLabel.Text = "Spy Panel Active"
+		loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-OctoSpy-22363"))()
+	end)
+
+	-- Run Panel
+	Button3.MouseButton1Click:Connect(function()
+		VisualLabel.Text = "Run Panel Active"
+		local gui = Instance.new("ScreenGui", player.PlayerGui)
+		gui.Name = "HOKALAZA_RUN_PANEL"
+		local frame = Instance.new("Frame", gui)
+		frame.Size = UDim2.new(0,360,0,230)
+		frame.Position = UDim2.new(0.5,-180,0.5,-115)
+		frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+		frame.BorderSizePixel = 0
+		frame.Active = true
+		frame.Draggable = true
+		Instance.new("UICorner", frame)
+		local glow = Instance.new("UIStroke", frame)
+		glow.Thickness = 3
+		glow.Color = Color3.fromRGB(255,255,255)
+		task.spawn(function()
+			while task.wait(0.05) do
+				glow.Transparency = 0.15+math.abs(math.sin(os.clock()*2))*0.35
+			end
+		end)
+		local title = Instance.new("TextLabel", frame)
+		title.Size = UDim2.new(1,-60,0,40)
+		title.Position = UDim2.new(0,15,0,0)
+		title.BackgroundTransparency = 1
+		title.Text = "HOKALAZA RUN PANEL"
+		title.Font = Enum.Font.GothamBold
+		title.TextSize = 22
+		title.TextColor3 = Color3.fromRGB(255,255,255)
+		title.TextXAlignment = Enum.TextXAlignment.Left
+
+		local minimize = Instance.new("TextButton", frame)
+		minimize.Size = UDim2.new(0,30,0,30)
+		minimize.Position = UDim2.new(1,-40,0,5)
+		minimize.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		minimize.Text = "_"
+		minimize.Font = Enum.Font.GothamBold
+		minimize.TextSize = 20
+		minimize.TextColor3 = Color3.fromRGB(0,0,0)
+		Instance.new("UICorner", minimize)
+
+		local scriptBox = Instance.new("TextBox", frame)
+		scriptBox.Size = UDim2.new(0,320,0,100)
+		scriptBox.Position = UDim2.new(0,20,0,60)
+		scriptBox.BackgroundColor3 = Color3.fromRGB(10,10,10)
+		scriptBox.TextColor3 = Color3.fromRGB(255,255,255)
+		scriptBox.Font = Enum.Font.Code
+		scriptBox.TextSize = 16
+		scriptBox.PlaceholderText = "Paste any Lua script here"
+		scriptBox.ClearTextOnFocus = false
+		scriptBox.TextWrapped = true
+		scriptBox.TextYAlignment = Enum.TextYAlignment.Top
+		Instance.new("UICorner", scriptBox)
+
+		local runButton = Instance.new("TextButton", frame)
+		runButton.Size = UDim2.new(0,320,0,45)
+		runButton.Position = UDim2.new(0,20,0,175)
+		runButton.BackgroundColor3 = Color3.fromRGB(255,255,255)
+		runButton.Text = "Start Loop"
+		runButton.TextColor3 = Color3.fromRGB(0,0,0)
+		runButton.Font = Enum.Font.GothamBold
+		runButton.TextSize = 18
+		Instance.new("UICorner", runButton)
+
+		local looping = false
+		local loopConnection
+		local function startLoop()
+			if looping then return end
+			looping = true
+			runButton.Text = "Stop Loop"
+			runButton.BackgroundColor3 = Color3.fromRGB(255,80,80)
+			runButton.TextColor3 = Color3.fromRGB(255,255,255)
+			loopConnection = RunService.Heartbeat:Connect(function()
+				local code = scriptBox.Text
+				if code and code~="" then
+					pcall(function() loadstring(code)() end)
+				end
+				task.wait(0.01)
+			end)
+		end
+		local function stopLoop()
+			looping = false
+			runButton.Text = "Start Loop"
+			runButton.BackgroundColor3 = Color3.fromRGB(255,255,255)
+			runButton.TextColor3 = Color3.fromRGB(0,0,0)
+			if loopConnection then
+				loopConnection:Disconnect()
+				loopConnection = nil
+			end
+		end
+		runButton.MouseButton1Click:Connect(function()
+			if looping then stopLoop() else startLoop() end
+		end)
+
+		local minimized = false
+		minimize.MouseButton1Click:Connect(function()
+			minimized = not minimized
+			scriptBox.Visible = not minimized
+			runButton.Visible = not minimized
+			TweenService:Create(frame,TweenInfo.new(0.3),{Size = minimized and UDim2.new(0,360,0,45) or UDim2.new(0,360,0,230)}):Play()
+		end)
+	end)
+
+	-- Visual Panel
+	Button4.MouseButton1Click:Connect(function()
+		VisualLabel.Text = "Visual Panel Active"
+		local gui = Instance.new("ScreenGui", player.PlayerGui)
+		gui.Name = "HOKALAZA_VISUAL_PANEL"
+
+		local leaderstats = player:WaitForChild("leaderstats")
+		local addExp = 100
+		local looping = false
+
+		local frame = Instance.new("Frame", gui)
+		frame.Size = UDim2.new(0,230,0,120)
+		frame.Position = UDim2.new(0.5,-115,0.4,-60)
+		frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+		frame.Active = true
+		frame.Draggable = true
+		Instance.new("UICorner", frame)
+
+		local title = Instance.new("TextLabel", frame)
+		title.Size = UDim2.new(1,-30,0,30)
+		title.Position = UDim2.new(0,5,0,0)
+		title.BackgroundTransparency = 1
+		title.Text = "Auto Exp HOKALAZA"
+		title.TextColor3 = Color3.fromRGB(255,255,255)
+		title.Font = Enum.Font.GothamBold
+		title.TextScaled = true
+		title.TextXAlignment = Enum.TextXAlignment.Left
+
+		local close = Instance.new("TextButton", frame)
+		close.Size = UDim2.new(0,25,0,25)
+		close.Position = UDim2.new(1,-30,0,2)
+		close.BackgroundColor3 = Color3.fromRGB(255,0,0)
+		close.TextColor3 = Color3.fromRGB(255,255,255)
+		close.Font = Enum.Font.GothamBold
+		close.TextScaled = true
+		close.Text = "X"
+		close.MouseButton1Click:Connect(function() gui:Destroy() end)
+
+		local toggle = Instance.new("TextButton", frame)
+		toggle.Size = UDim2.new(0,200,0,50)
+		toggle.Position = UDim2.new(0.5,-100,0.5,-25)
+		toggle.BackgroundColor3 = Color3.fromRGB(0,170,0)
+		toggle.TextColor3 = Color3.fromRGB(255,255,255)
+		toggle.Font = Enum.Font.GothamBold
+		toggle.TextScaled = true
+		toggle.Text = "Exp Farm"
+
+		toggle.MouseButton1Click:Connect(function()
+			looping = not looping
+			if looping then
+				toggle.Text = "Stop Exp Farm"
+				toggle.BackgroundColor3 = Color3.fromRGB(0,255,0)
+			else
+				toggle.Text = "Exp Farm"
+				toggle.BackgroundColor3 = Color3.fromRGB(0,170,0)
+			end
+
+			task.spawn(function()
+				while looping do
+					local stat = leaderstats:FindFirstChild("Exp")
+					if stat then
+						stat.Value = stat.Value + addExp
+					end
+					task.wait(1)
+				end
+			end)
+		end)
+	end)
+end
+
+-- Key submit
+submit.MouseButton1Click:Connect(function()
+	if textbox.Text == correctKey then
+		CreateMainGui()
+	else
+		textbox.Text = ""
+		textbox.PlaceholderText = "Wrong Key!"
+	end
+end)
