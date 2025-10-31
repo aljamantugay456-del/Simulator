@@ -1,0 +1,339 @@
+local a=game:GetService("Players")
+local b=game:GetService("ReplicatedStorage")
+local c=game:GetService("Workspace")
+local d=game:GetService("TweenService")
+local e=a.LocalPlayer
+local f=e:WaitForChild("PlayerGui")
+local g=Instance.new("ScreenGui")
+g.Name="HOKALAZA HUB"
+g.ResetOnSpawn=false
+g.Parent=f
+local h=Instance.new("Frame",g)
+h.Size=UDim2.new(0,45,0,45)
+h.Position=UDim2.new(0,15,0.5,-22)
+h.BackgroundColor3=Color3.fromRGB(255,255,255)
+Instance.new("UICorner",h).CornerRadius=UDim.new(0,10)
+local i=Instance.new("UIStroke",h)
+i.Color=Color3.fromRGB(255,255,255)
+i.Thickness=2
+i.Transparency=0.2
+local j=Instance.new("TextButton",h)
+j.Size=UDim2.new(1,0,1,0)
+j.BackgroundTransparency=1
+j.Text="☰"
+j.Font=Enum.Font.GothamBold
+j.TextSize=20
+j.TextColor3=Color3.fromRGB(0,0,0)
+local k=Instance.new("Frame",g)
+k.Size=UDim2.new(0,480,0,320)
+k.Position=UDim2.new(0.5,0,0.5,0)
+k.AnchorPoint=Vector2.new(0.5,0.5)
+k.BackgroundColor3=Color3.fromRGB(15,15,18)
+k.BackgroundTransparency=0.35
+Instance.new("UICorner",k).CornerRadius=UDim.new(0,14)
+local l=Instance.new("UIStroke",k)
+l.Color=Color3.fromRGB(255,255,255)
+l.Thickness=1
+l.Transparency=0.7
+local m=Instance.new("TextLabel",k)
+m.Size=UDim2.new(1,-20,0,35)
+m.Position=UDim2.new(0,10,0,5)
+m.BackgroundTransparency=1
+m.Text="HOKALAZA HUB"
+m.Font=Enum.Font.GothamBold
+m.TextScaled=true
+m.TextColor3=Color3.fromRGB(255,255,255)
+m.TextStrokeTransparency=0.6
+local n=false
+local o,p
+k.InputBegan:Connect(function(q)
+if q.UserInputType==Enum.UserInputType.MouseButton1 then
+n=true
+o=q.Position
+p=k.Position
+end
+end)
+k.InputChanged:Connect(function(q)
+if q.UserInputType==Enum.UserInputType.MouseMovement and n then
+local r=q.Position-o
+k.Position=UDim2.new(p.X.Scale,p.X.Offset+r.X,p.Y.Scale,p.Y.Offset+r.Y)
+end
+end)
+k.InputEnded:Connect(function(q)
+if q.UserInputType==Enum.UserInputType.MouseButton1 then
+n=false
+end
+end)
+local s=Instance.new("Frame",k)
+s.Size=UDim2.new(0,120,1,-55)
+s.Position=UDim2.new(0,10,0,45)
+s.BackgroundTransparency=1
+local t=Instance.new("UIListLayout",s)
+t.SortOrder=Enum.SortOrder.LayoutOrder
+t.Padding=UDim.new(0,6)
+t.VerticalAlignment=Enum.VerticalAlignment.Top
+local u=Instance.new("Folder",k)
+u.Name="Pages"
+local function v(w)
+w.MouseEnter:Connect(function()
+d:Create(w,TweenInfo.new(0.2),{BackgroundColor3=Color3.fromRGB(255,255,255),TextColor3=Color3.fromRGB(0,0,0)}):Play()
+end)
+w.MouseLeave:Connect(function()
+d:Create(w,TweenInfo.new(0.2),{BackgroundColor3=Color3.fromRGB(220,220,220),TextColor3=Color3.fromRGB(20,20,20)}):Play()
+end)
+end
+local function x(y)
+local z=Instance.new("TextButton")
+z.Size=UDim2.new(1,-10,0,35)
+z.BackgroundColor3=Color3.fromRGB(220,220,220)
+z.TextColor3=Color3.fromRGB(20,20,20)
+z.Text=y
+z.Font=Enum.Font.GothamBold
+z.TextSize=14
+Instance.new("UICorner",z).CornerRadius=UDim.new(0,8)
+v(z)
+return z
+end
+local function A(B,C)
+local D
+if C then
+D=Instance.new("ScrollingFrame",u)
+D.CanvasSize=UDim2.new(0,0,2,0)
+D.ScrollBarThickness=4
+D.ScrollBarImageColor3=Color3.fromRGB(255,255,255)
+else
+D=Instance.new("Frame",u)
+end
+D.Name=B
+D.Size=UDim2.new(1,-140,1,-65)
+D.Position=UDim2.new(0,130,0,45)
+D.BackgroundColor3=Color3.fromRGB(255,255,255)
+D.BackgroundTransparency=0.85
+Instance.new("UICorner",D).CornerRadius=UDim.new(0,10)
+local E=Instance.new("UIStroke",D)
+E.Color=Color3.fromRGB(255,255,255)
+E.Thickness=1
+E.Transparency=0.7
+D.Visible=false
+return D
+end
+local F=A("AutoCoin")
+local G=A("ExpFarm")
+local H=A("Teleport",true)
+local I=A("Run")
+local J={
+AutoCoin=x("Auto Coin"),
+ExpFarm=x("Exp Farm"),
+Teleport=x("Teleport"),
+Run=x("Run Tab")
+}
+for _,K in pairs(J) do K.Parent=s end
+local function L(M)
+for _,N in pairs(u:GetChildren()) do
+N.Visible=N.Name==M
+end
+end
+J.AutoCoin.MouseButton1Click:Connect(function() L("AutoCoin") end)
+J.ExpFarm.MouseButton1Click:Connect(function() L("ExpFarm") end)
+J.Teleport.MouseButton1Click:Connect(function() L("Teleport") end)
+J.Run.MouseButton1Click:Connect(function() L("Run") end)
+L("AutoCoin")
+local O=Instance.new("TextButton",F)
+O.Size=UDim2.new(0,160,0,45)
+O.Position=UDim2.new(0,30,0,40)
+O.BackgroundColor3=Color3.fromRGB(255,255,255)
+O.TextColor3=Color3.fromRGB(0,0,0)
+O.Text="Auto Coin: OFF"
+O.Font=Enum.Font.GothamBold
+O.TextSize=16
+Instance.new("UICorner",O).CornerRadius=UDim.new(0,8)
+v(O)
+local P=false
+local Q
+O.MouseButton1Click:Connect(function()
+P=not P
+O.Text="Auto Coin: "..(P and "ON" or "OFF")
+if P then
+Q=task.spawn(function()
+local R=b:WaitForChild("Remotes"):WaitForChild("RecieveCoin")
+while P do
+pcall(function()
+local S=c:FindFirstChild("Jeepnies")
+if S then
+for _,T in pairs(S:GetChildren()) do
+local U=T:FindFirstChild("PassengerValues")
+if U then
+R:FireServer({Value=300,PassengerValues=U,Password=123456789})
+end
+end
+end
+end)
+task.wait(0.02)
+end
+end)
+else
+if Q then task.cancel(Q) Q=nil end
+end
+end)
+local V=Instance.new("TextButton",G)
+V.Size=UDim2.new(0,160,0,45)
+V.Position=UDim2.new(0,30,0,40)
+V.BackgroundColor3=Color3.fromRGB(255,255,255)
+V.TextColor3=Color3.fromRGB(0,0,0)
+V.Text="Exp Farm: OFF"
+V.Font=Enum.Font.GothamBold
+V.TextSize=16
+Instance.new("UICorner",V).CornerRadius=UDim.new(0,8)
+v(V)
+local W=false
+local X
+V.MouseButton1Click:Connect(function()
+W=not W
+V.Text="Exp Farm: "..(W and "ON" or "OFF")
+if W then
+X=task.spawn(function()
+local Y=e:WaitForChild("leaderstats")
+local Z=100
+local aa=5000
+while W do
+local ab=Y:FindFirstChild("Exp")
+local ac=Y:FindFirstChild("Cash")
+if ab then ab.Value=ab.Value+Z end
+if ac then ac.Value=ac.Value+aa end
+task.wait(1)
+end
+end)
+else
+if X then task.cancel(X) X=nil end
+end
+end)
+local ad={
+{"Bulakan",Vector3.new(-1545,13,-3470)},
+{"Malolos",Vector3.new(17796,13,-1104)},
+{"Balagtas",Vector3.new(-3879,14,3482)},
+{"Guiguinto",Vector3.new(822,13,3290)},
+{"BulakanTerm",Vector3.new(-626,16,-3202)},
+{"BalagtasTerm",Vector3.new(-3922,17,3156)},
+{"MalolosTerm",Vector3.new(17606,16,-1195)},
+{"GuiguintoTerm",Vector3.new(1060,16,3167)}
+}
+local ae=15
+for _,af in pairs(ad) do
+local ag=Instance.new("TextButton",H)
+ag.Size=UDim2.new(0,180,0,35)
+ag.Position=UDim2.new(0,30,0,ae)
+ae=ae+45
+ag.BackgroundColor3=Color3.fromRGB(255,255,255)
+ag.TextColor3=Color3.fromRGB(0,0,0)
+ag.Text="Teleport: "..af[1]
+ag.Font=Enum.Font.GothamBold
+ag.TextSize=14
+Instance.new("UICorner",ag).CornerRadius=UDim.new(0,8)
+v(ag)
+ag.MouseButton1Click:Connect(function()
+local ah=e.Character or e.CharacterAdded:Wait()
+local ai=ah:FindFirstChild("HumanoidRootPart")
+if ai then ai.CFrame=CFrame.new(af[2]) end
+end)
+end
+local aj=Instance.new("TextButton",I)
+aj.Size=UDim2.new(0,180,0,45)
+aj.Position=UDim2.new(0,30,0,60)
+aj.BackgroundColor3=Color3.fromRGB(255,255,255)
+aj.TextColor3=Color3.fromRGB(0,0,0)
+aj.Text="Open Run Panel"
+aj.Font=Enum.Font.GothamBold
+aj.TextSize=16
+Instance.new("UICorner",aj).CornerRadius=UDim.new(0,8)
+v(aj)
+aj.MouseButton1Click:Connect(function()
+local ak=Instance.new("ScreenGui",e:WaitForChild("PlayerGui"))
+ak.Name="HOKALAZA_RUN_PANEL"
+local al=Instance.new("Frame",ak)
+al.Size=UDim2.new(0,320,0,200)
+al.Position=UDim2.new(0.5,-160,0.5,-100)
+al.BackgroundColor3=Color3.fromRGB(0,0,0)
+al.BorderSizePixel=0
+al.Active=true
+al.Draggable=true
+Instance.new("UICorner",al)
+local am=Instance.new("UIStroke",al)
+am.Thickness=2
+am.Color=Color3.fromRGB(255,255,255)
+am.Transparency=0.3
+task.spawn(function()
+while task.wait(0.05) do
+local an=math.abs(math.sin(os.clock()*2))
+am.Transparency=0.15+an*0.35
+end
+end)
+local ao=Instance.new("TextLabel",al)
+ao.Size=UDim2.new(1,-40,0,30)
+ao.Position=UDim2.new(0,10,0,5)
+ao.BackgroundTransparency=1
+ao.Text="HOKALAZA RUN PANEL"
+ao.TextScaled=true
+ao.Font=Enum.Font.GothamBold
+ao.TextColor3=Color3.fromRGB(255,255,255)
+ao.TextXAlignment=Enum.TextXAlignment.Left
+local ap=Instance.new("TextButton",al)
+ap.Size=UDim2.new(0,25,0,25)
+ap.Position=UDim2.new(1,-35,0,5)
+ap.BackgroundColor3=Color3.fromRGB(255,0,0)
+ap.Text="X"
+ap.Font=Enum.Font.GothamBold
+ap.TextScaled=true
+ap.TextColor3=Color3.fromRGB(255,255,255)
+Instance.new("UICorner",ap)
+ap.MouseButton1Click:Connect(function() ak:Destroy() end)
+local aq=Instance.new("TextBox",al)
+aq.Size=UDim2.new(1,-20,0,80)
+aq.Position=UDim2.new(0,10,0,40)
+aq.PlaceholderText="Paste Lua script here..."
+aq.Text=""
+aq.ClearTextOnFocus=false
+aq.TextWrapped=true
+aq.TextScaled=false
+aq.BackgroundColor3=Color3.fromRGB(25,25,25)
+aq.TextColor3=Color3.fromRGB(255,255,255)
+aq.Font=Enum.Font.Code
+aq.TextSize=13
+Instance.new("UICorner",aq)
+local ar=Instance.new("TextButton",al)
+ar.Size=UDim2.new(0,120,0,35)
+ar.Position=UDim2.new(0.5,-60,1,-45)
+ar.BackgroundColor3=Color3.fromRGB(255,255,255)
+ar.TextColor3=Color3.fromRGB(0,0,0)
+ar.Text="RUN: OFF"
+ar.Font=Enum.Font.GothamBold
+ar.TextSize=15
+Instance.new("UICorner",ar).CornerRadius=UDim.new(0,8)
+v(ar)
+local as=false
+local at
+ar.MouseButton1Click:Connect(function()
+as=not as
+ar.Text="RUN: "..(as and "ON" or "OFF")
+if as then
+at=task.spawn(function()
+while as do
+pcall(function()
+local au=aq.Text
+if au and #au>0 then
+local av,aw=loadstring(au)
+if av then pcall(av) end
+end
+end)
+task.wait(0.01)
+end
+end)
+else
+if at then task.cancel(at) at=nil end
+end
+end)
+end)
+local ax=true
+j.MouseButton1Click:Connect(function()
+ax=not ax
+d:Create(k,TweenInfo.new(0.4,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),{Position=UDim2.new(0.5+(ax and 0 or -1.1),0,0.5,0)}):Play()
+end)
